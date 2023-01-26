@@ -1,14 +1,28 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TeacherModule } from './teacher/teacher.module';
-import { GroupModule } from './group/group.module';
-import { ClassroomModule } from './classroom/classroom.module';
-import { SubjectModule } from './subject/subject.module';
-import { ScheduleModule } from './schedule/schedule.module';
+import { TeacherModule } from './modules/teacher/teacher.module';
+import { GroupModule } from './modules/group/group.module';
+import { ClassroomModule } from './modules/classroom/classroom.module';
+import { SubjectModule } from './modules/subject/subject.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [TeacherModule, GroupModule, ClassroomModule, SubjectModule, ScheduleModule],
+  imports: [
+    MongooseModule.forRoot(
+      'mongodb+srv://begaliev:12345@cluster0.n4rkvdd.mongodb.net/schedule-generator?retryWrites=true&w=majority',
+    ),
+    TeacherModule,
+    GroupModule,
+    ClassroomModule,
+    SubjectModule,
+    ScheduleModule,
+    AuthModule,
+    UsersModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
