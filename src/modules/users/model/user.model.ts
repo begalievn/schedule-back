@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import { IsEmail, IsNumber, IsString } from 'class-validator';
+import { Exclude } from 'class-transformer';
 
 export type UserDocument = HydratedDocument<User>;
 
@@ -18,7 +19,7 @@ export class User {
   @IsNumber()
   age: string;
 
-  @Prop()
+  @Prop({ unique: true })
   @IsEmail()
   email: string;
 
@@ -28,6 +29,7 @@ export class User {
 
   @Prop()
   @IsString()
+  @Exclude()
   password: string;
 
   @Prop()

@@ -1,15 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { BaseModel } from '../../../base/model/base.model';
+import { Subject } from '../../subject/model/subject.model';
 
 export type GroupDocument = HydratedDocument<Group>;
 
 @Schema()
-export class Group {
+export class Group extends BaseModel {
   @Prop()
   name: string;
 
   @Prop()
-  students_count: number;
+  studentsCount: number;
+
+  @Prop()
+  year: number;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }] })
+  subjects: Subject[];
 }
 
 export const GroupSchema = SchemaFactory.createForClass(Group);
