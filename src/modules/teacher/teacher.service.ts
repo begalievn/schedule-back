@@ -1,23 +1,33 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
-import { UpdateTeacherDto } from './dto/update-teacher.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Teacher, TeacherDocument } from './model/teacher.model';
+import { Model } from 'mongoose';
+import { BaseService } from '../../base/base.service';
+import { SearchTeacherDto } from './dto/search-teacher.dto';
 
 @Injectable()
-export class TeacherService {
-  create(createTeacherDto: CreateTeacherDto) {
-    return 'This action adds a new teacher';
+export class TeacherService extends BaseService<Teacher> {
+  constructor(
+    @InjectModel(Teacher.name)
+    private readonly teacherModel: Model<TeacherDocument>,
+  ) {
+    super(teacherModel);
   }
 
-  findAll() {
-    return `This action returns all teacher`;
+  async create(createTeacherDto: CreateTeacherDto) {
+    console.log(createTeacherDto);
+    const newTeacher = new this.teacherModel(createTeacherDto);
+    console.log(newTeacher);
+    return await this.teacherModel.insertMany([newTeacher]);
+  }
+
+  async findByProperty(searchTeacherDto: SearchTeacherDto) {
+    return this.teacherModel.findOne(searchTeacherDto);
   }
 
   findOne(id: number) {
     return `This action returns a #${id} teacher`;
-  }
-
-  update(id: number, updateTeacherDto: UpdateTeacherDto) {
-    return `This action updates a #${id} teacher`;
   }
 
   remove(id: number) {

@@ -19,25 +19,25 @@ export class ClassroomController {
 
   @Post()
   @ApiOperation({ summary: 'Create a classroom' })
-  create(@Body() createClassroomDto: CreateClassroomDto) {
+  async create(@Body() createClassroomDto: CreateClassroomDto) {
     return this.classroomService.create(createClassroomDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'List all classrooms' })
-  findAll() {
+  async findAll() {
     return this.classroomService.list();
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get by id' })
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.classroomService.get(id);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update a classroom' })
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateClassroomDto: UpdateClassroomDto,
   ) {
@@ -46,7 +46,7 @@ export class ClassroomController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a classroom by id' })
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.classroomService.delete(id);
   }
 }
