@@ -1,6 +1,4 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { TeacherModule } from './modules/teacher/teacher.module';
 import { GroupModule } from './modules/group/group.module';
 import { ClassroomModule } from './modules/classroom/classroom.module';
@@ -23,7 +21,5 @@ import { MongooseModule } from '@nestjs/mongoose';
     AuthModule,
     UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
