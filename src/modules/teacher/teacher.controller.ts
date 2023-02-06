@@ -13,7 +13,7 @@ import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('teacher')
-@ApiTags('Teachers')
+@ApiTags('Teacher')
 export class TeacherController {
   constructor(private readonly teacherService: TeacherService) {}
 
