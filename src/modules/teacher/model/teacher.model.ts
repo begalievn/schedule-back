@@ -1,9 +1,15 @@
-import { Prop, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { HydratedDocument } from 'mongoose';
+import { Subject } from '../../subject/model/subject.model';
+import { BaseModel } from '../../../base/model/base.model';
+import { WorkingTimeGraphicEnum } from '../../../utils/enums/working-time-graphic.enum';
+import { Type } from 'class-transformer';
+import { IsOptional } from 'class-validator';
 
 export type TeacherDocument = HydratedDocument<Teacher>;
 
-export class Teacher {
+@Schema()
+export class Teacher extends BaseModel {
   @Prop()
   firstName: string;
 
@@ -11,13 +17,20 @@ export class Teacher {
   lastName: string;
 
   @Prop()
-  subjects: string[];
+  email: string;
 
   @Prop()
-  working_days: string[];
+  workingDays: number[];
 
-  @Prop()
-  working_hours: string[];
+  @Prop({
+    enum: WorkingTimeGraphicEnum,
+    required: true,
+  })
+  workingGraphic: WorkingTimeGraphicEnum;
+
+  @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }] })
+  @Type(() => Subject)
+  subjects: Subject[];
 }
 
 export const TeacherSchema = SchemaFactory.createForClass(Teacher);

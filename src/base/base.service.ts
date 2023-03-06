@@ -1,6 +1,7 @@
 import { Model, HydratedDocument } from 'mongoose';
+import { BaseModel } from './model/base.model';
 
-export abstract class BaseService<T> {
+export abstract class BaseService<T extends BaseModel> {
   model: Model<HydratedDocument<T>>;
 
   protected constructor(model: Model<HydratedDocument<T>>) {
@@ -9,6 +10,10 @@ export abstract class BaseService<T> {
 
   async list() {
     return this.model.find().exec();
+  }
+
+  async listWithPopulate(populate: string) {
+    return this.model.find().populate(populate);
   }
 
   async get(id: string) {

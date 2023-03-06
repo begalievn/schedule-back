@@ -1,19 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { Block } from '../../../utils/enums/block.enum';
+import { BaseModel } from '../../../base/model/base.model';
 
 export type ClassroomDocument = HydratedDocument<Classroom>;
 
 @Schema()
-export class Classroom {
+export class Classroom extends BaseModel {
   @Prop()
   title: string;
 
   @Prop({
     type: String,
-    enum: ['A', 'B', 'C', 'D', 'E'],
-    default: 'B',
+    enum: Block,
+    default: Block.B,
   })
-  block: string;
+  block: Block;
 
   @Prop()
   capacity: number;

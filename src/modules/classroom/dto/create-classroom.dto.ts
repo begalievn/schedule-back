@@ -10,8 +10,10 @@ export class CreateClassroomDto {
   title: string;
 
   @ApiProperty({
+    type: 'string',
     enum: Block,
     example: Block.B,
+    description: 'Block in which a classroom is located',
   })
   @IsEnum(Block)
   block: Block;
