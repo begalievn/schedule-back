@@ -2,7 +2,7 @@ import { SemesterEnum } from '../../../utils/enums/semester.enum';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
 import { Teacher } from '../../teacher/model/teacher.model';
-import { Group } from '../../group/model/group.model';
+import { CourseYear } from '../../../utils/enums/course-year.enum';
 
 export class CreateSubjectDto {
   @ApiProperty({
@@ -34,19 +34,12 @@ export class CreateSubjectDto {
   description: string;
 
   @ApiProperty({
-    enum: SemesterEnum,
+    enum: [SemesterEnum.FALL, SemesterEnum.SPRING],
     example: 1,
     description: 'Semester of a subject',
   })
   @IsEnum(SemesterEnum)
   semester: SemesterEnum;
-
-  @ApiProperty({
-    example: true,
-    description: 'Status of a subject, active or not',
-  })
-  @IsOptional()
-  status: boolean;
 
   @ApiProperty({
     type: 'array',
@@ -56,15 +49,15 @@ export class CreateSubjectDto {
     example: ['63d22850f649bf0d1d9e56b0'],
   })
   @IsArray()
+  @IsOptional()
   teachers: Teacher[];
 
   @ApiProperty({
-    type: 'array',
-    items: {
-      oneOf: [{ $ref: getSchemaPath(Group) }],
-    },
-    example: ['_id'],
+    enum: [CourseYear.FIRST_YEAR, CourseYear.SECOND_YEAR],
+    isArray: true,
+    example: [CourseYear.FIRST_YEAR, CourseYear.SECOND_YEAR],
   })
   @IsArray()
-  groups: Group[];
+  courses: CourseYear[];
+
 }
