@@ -26,6 +26,9 @@ export class Subject extends BaseModel {
   @Prop()
   credits: number;
 
+  @Prop()
+  numberOfHours: number;
+
   @Prop({
     enum: SemesterEnum,
     required: true,
