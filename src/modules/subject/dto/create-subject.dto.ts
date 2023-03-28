@@ -1,6 +1,12 @@
 import { SemesterEnum } from '../../../utils/enums/semester.enum';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { IsArray, IsEnum, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEnum,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { Teacher } from '../../teacher/model/teacher.model';
 import { CourseYear } from '../../../utils/enums/course-year.enum';
 
@@ -25,6 +31,12 @@ export class CreateSubjectDto {
   })
   @IsNumber()
   credits: number;
+
+  @ApiProperty({
+    example: 4,
+  })
+  @IsNumber()
+  numberOfHours: number;
 
   @ApiProperty({
     example: 'This is a description of a subject',
@@ -59,5 +71,4 @@ export class CreateSubjectDto {
   })
   @IsArray()
   courses: CourseYear[];
-
 }

@@ -5,12 +5,13 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query,
 } from '@nestjs/common';
 import { SubjectService } from './subject.service';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ListSubjectParamsDto } from './dto/list-subject-params.dto';
 
 @Controller('subject')
 @ApiTags('Subject')
@@ -27,6 +28,12 @@ export class SubjectController {
   @ApiOperation({ summary: 'List all subjects' })
   async findAll() {
     return await this.subjectService.getAll();
+  }
+
+  @Get('filtered')
+  @ApiOperation({ summary: 'Get filtered subjects' })
+  async getFilteredSubjects(@Query() listSubjectParams: ListSubjectParamsDto) {
+    return await this.subjectService.getFilteredSubjects(listSubjectParams);
   }
 
   @Get(':id')
