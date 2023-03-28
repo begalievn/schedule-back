@@ -5,6 +5,7 @@ import { Subject, SubjectDocument } from './model/subject.model';
 import { Model } from 'mongoose';
 import { BaseService } from '../../base/base.service';
 import { ListSubjectParamsDto } from './dto/list-subject-params.dto';
+import { ListScheduleParamsDto } from '../schedule/dto/list-schedule-params.dto';
 
 @Injectable()
 export class SubjectService extends BaseService<Subject> {
@@ -22,7 +23,15 @@ export class SubjectService extends BaseService<Subject> {
   async getFilteredSubjects(listSubjectParams: ListSubjectParamsDto) {
     const result = await this.subjectModel.find({
       semester: listSubjectParams.semester,
-      courses: { $all: [1] },
+      courses: { $all: [listSubjectParams.course] },
+    });
+
+    return result;
+  }
+
+  async getExampleSubjectsForSchedule(listParams: ListScheduleParamsDto) {
+    const result = await this.subjectModel.find({
+      semester: listParams.semester,
     });
 
     return result;

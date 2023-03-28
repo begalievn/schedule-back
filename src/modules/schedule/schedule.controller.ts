@@ -1,6 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ListScheduleParamsDto } from './dto/list-schedule-params.dto';
 
 @ApiTags('Schedule')
 @Controller('schedule')
@@ -9,7 +10,7 @@ export class ScheduleController {
 
   @Get('example/subjects')
   @ApiOperation({ summary: 'List of subjects to create a schedule' })
-  findAll() {
-    return this.scheduleService.list();
+  findAll(@Query() listParams: ListScheduleParamsDto) {
+    return this.scheduleService.getExampleSubjects(listParams);
   }
 }
