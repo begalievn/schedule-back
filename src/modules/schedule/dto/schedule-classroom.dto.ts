@@ -1,11 +1,11 @@
 import { Block } from '../../../utils/enums/block.enum';
-import { IsNumber, IsString, IsEnum } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { ClassroomType } from '../../../utils/enums/classroom-type.enum';
+import { IsEnum, IsString } from 'class-validator';
 
-export class CreateClassroomDto {
+export class ScheduleClassroomDto {
   @ApiProperty({
     example: 'B201',
+    description: 'Name of a classroom',
   })
   @IsString()
   title: string;
@@ -20,16 +20,8 @@ export class CreateClassroomDto {
   block: Block;
 
   @ApiProperty({
-    type: 'enum',
-    enum: ClassroomType,
-    description: 'Type of a classroom',
-  })
-  @IsEnum(ClassroomType)
-  type: ClassroomType;
-
-  @ApiProperty({
     example: 40,
+    description: 'Capacity of a classroom',
   })
-  @IsNumber()
   capacity: number;
 }

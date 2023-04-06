@@ -10,5 +10,6 @@ import { Teacher, TeacherSchema } from './model/teacher.model';
   ],
   controllers: [TeacherController],
   providers: [TeacherService],
+  exports: [TeacherService],
 })
 export class TeacherModule {}

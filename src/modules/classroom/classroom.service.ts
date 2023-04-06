@@ -20,7 +20,9 @@ export class ClassroomService extends BaseService<Classroom> {
       title: createClassroomDto.title,
     });
     if (isClassroomExists) {
-      throw new BadRequestException('Classroom already exists');
+      throw new BadRequestException(
+        `Classroom ${createClassroomDto.title} already exists`,
+      );
     }
     const newClassroom = new this.classroomModel(createClassroomDto);
     return newClassroom.save();
