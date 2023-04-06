@@ -1,24 +1,31 @@
-import { Teacher } from '../../teacher/model/teacher.model';
 import { BaseModel } from '../../../base/model/base.model';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { SemesterEnum } from '../../../utils/enums/semester.enum';
+import { Classroom } from '../../classroom/model/classroom.model';
 
 export type ScheduleDocument = HydratedDocument<Schedule>;
 
-interface Subject {
-  title: string;
-  teachers: Teacher[];
-  code: string;
+export interface IClassroom {
+  classroom: Classroom;
 }
 
-interface Course {
+export interface ISubjectSubject {
+  name: string;
+  teachers: string[];
+  classroom: string;
+  index: number;
+  numberOfHours: number;
+}
+
+export interface ICourse {
   course: number;
-  subject: Subject[];
+  subjects: ISubjectSubject[] | null[];
 }
 
-interface Days {
+export interface IDays {
   day: string;
-  courses: Course[];
+  courses: ICourse[];
 }
 
 @Schema()
@@ -26,8 +33,19 @@ export class Schedule extends BaseModel {
   @Prop()
   name: string;
 
+  @Prop({
+    enum: SemesterEnum,
+    required: true,
+  })
+  semester: SemesterEnum;
+
+  @Prop({
+    type: Date,
+  })
+  year: Date;
+
   @Prop()
-  courses: Course[];
+  days: IDays[];
 }
 
 export const ScheduleSchema = SchemaFactory.createForClass(Schedule);

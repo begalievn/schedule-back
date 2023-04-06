@@ -1,6 +1,12 @@
 import { Subject } from '../../subject/model/subject.model';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { IsArray, IsEmail, IsEnum, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsEmail,
+  IsEnum,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { WorkingTimeGraphicEnum } from '../../../utils/enums/working-time-graphic.enum';
 
 export class CreateTeacherDto {

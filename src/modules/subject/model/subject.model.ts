@@ -6,6 +6,7 @@ import { Teacher } from '../../teacher/model/teacher.model';
 import { Group } from '../../group/model/group.model';
 import { Type } from 'class-transformer';
 import { CourseYear } from '../../../utils/enums/course-year.enum';
+import { Classroom } from '../../classroom/model/classroom.model';
 
 export type SubjectDocument = HydratedDocument<Subject>;
 
@@ -48,6 +49,9 @@ export class Subject extends BaseModel {
   @Prop({ type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }] })
   @Type(() => Group)
   groups: Group[];
+
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Classroom' })
+  classroom: Classroom;
 
   @Prop({
     type: [Number],
