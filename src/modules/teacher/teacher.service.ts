@@ -22,6 +22,23 @@ export class TeacherService extends BaseService<Teacher> {
     return await this.teacherModel.insertMany([newTeacher]);
   }
 
+  async searchTeacher(searchTeacherDto: SearchTeacherDto): Promise<Teacher[]> {
+    const { firstName, lastName, email } = searchTeacherDto;
+    const result = await this.teacherModel.aggregate([
+      {
+        $match: {
+          $or: [
+            { firstName: { $regex: new RegExp(`^${firstName}`, 'i') } },
+            { lastName: { $regex: new RegExp(`^${lastName}`, 'i') } },
+            { email: { $regex: new RegExp(`^${email}`, 'i') } },
+          ],
+        },
+      },
+    ]);
+
+    return result;
+  }
+
   async findByProperty(searchTeacherDto: SearchTeacherDto) {
     return this.teacherModel.findOne(searchTeacherDto);
   }

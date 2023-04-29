@@ -5,6 +5,7 @@ export class SearchTeacherDto {
   @ApiProperty({
     example: 'Alex',
     description: 'FirstName of a teacher',
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -13,6 +14,7 @@ export class SearchTeacherDto {
   @ApiProperty({
     example: 'Blare',
     description: 'LastName of a teacher',
+    required: false,
   })
   @IsString()
   @IsOptional()
@@ -21,8 +23,9 @@ export class SearchTeacherDto {
   @ApiProperty({
     example: 'teacher@gmail.com',
     description: 'Email of a teacher',
+    required: false,
   })
-  @IsEmail()
+  @IsString()
   @IsOptional()
   email: string;
 }

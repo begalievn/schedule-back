@@ -5,12 +5,14 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Delete, Query,
 } from '@nestjs/common';
 import { TeacherService } from './teacher.service';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { SearchTeacherDto } from './dto/search-teacher.dto';
+import { Teacher } from './model/teacher.model';
 
 @Controller('teacher')
 @ApiTags('Teacher')
@@ -19,31 +21,42 @@ export class TeacherController {
 
   @Post()
   @ApiOperation({ summary: 'Create a teacher' })
-  create(@Body() createTeacherDto: CreateTeacherDto) {
+  async create(@Body() createTeacherDto: CreateTeacherDto) {
     return this.teacherService.create(createTeacherDto);
   }
 
   @Get()
   @ApiOperation({ summary: 'List all teachers' })
-  findAll() {
+  async findAll() {
     return this.teacherService.listWithPopulate('subjects');
+  }
+
+  @Get('search')
+  @ApiOperation({ summary: 'Search teachers' })
+  async searchTeachers(
+    @Query() searchTeacherDto: SearchTeacherDto,
+  ): Promise<Teacher[]> {
+    return this.teacherService.searchTeacher(searchTeacherDto);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Find by id' })
-  findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string) {
     return this.teacherService.get(id);
   }
 
   @Patch(':id')
   @ApiOperation({ summary: 'Update by id' })
-  update(@Param('id') id: string, @Body() updateTeacherDto: UpdateTeacherDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateTeacherDto: UpdateTeacherDto,
+  ) {
     return this.teacherService.update(id, updateTeacherDto);
   }
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete by id' })
-  remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string) {
     return this.teacherService.delete(id);
   }
 }
