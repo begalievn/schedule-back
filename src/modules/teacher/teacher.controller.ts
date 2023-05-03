@@ -13,6 +13,7 @@ import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { SearchTeacherDto } from './dto/search-teacher.dto';
 import { Teacher } from './model/teacher.model';
+import { SearchTeacherV2Dto } from './dto/search-teacher-v2.dto';
 
 @Controller('teacher')
 @ApiTags('Teacher')
@@ -34,7 +35,7 @@ export class TeacherController {
   @Get('search')
   @ApiOperation({ summary: 'Search teachers' })
   async searchTeachers(
-    @Query() searchTeacherDto: SearchTeacherDto,
+    @Query() searchTeacherDto: SearchTeacherV2Dto,
   ): Promise<Teacher[]> {
     return this.teacherService.searchTeacher(searchTeacherDto);
   }
