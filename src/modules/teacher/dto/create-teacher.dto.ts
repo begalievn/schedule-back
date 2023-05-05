@@ -1,7 +1,8 @@
 import { Subject } from '../../subject/model/subject.model';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import {
-  IsArray, IsDate,
+  IsArray,
+  IsDate,
   IsEmail,
   IsEnum,
   IsOptional,
