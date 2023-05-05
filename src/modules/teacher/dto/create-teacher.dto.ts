@@ -2,12 +2,14 @@ import { Subject } from '../../subject/model/subject.model';
 import { ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import {
   IsArray,
+  IsDate,
   IsEmail,
   IsEnum,
   IsOptional,
   IsString,
 } from 'class-validator';
 import { WorkingTimeGraphicEnum } from '../../../utils/enums/working-time-graphic.enum';
+import { GenderEnum } from '../../../utils/enums/gender.enum';
 
 export class CreateTeacherDto {
   @ApiProperty({
@@ -32,6 +34,15 @@ export class CreateTeacherDto {
   email: string;
 
   @ApiProperty({
+    enum: GenderEnum,
+    example: GenderEnum.MALE,
+    description: 'Gender of a teacher',
+  })
+  @IsEnum(GenderEnum)
+  @IsOptional()
+  gender: GenderEnum;
+
+  @ApiProperty({
     enum: WorkingTimeGraphicEnum,
     example: WorkingTimeGraphicEnum.BEFORE,
     description: 'Working graphic of a teacher',
@@ -39,6 +50,30 @@ export class CreateTeacherDto {
   @IsEnum(WorkingTimeGraphicEnum)
   @IsOptional()
   workingGraphic: WorkingTimeGraphicEnum;
+
+  @ApiProperty({
+    example: 'Bokonbaeva 18',
+    description: 'Address of a teacher',
+  })
+  @IsString()
+  @IsOptional()
+  address: string;
+
+  @ApiProperty({
+    example: '0556374856',
+    description: 'Phone number of a teacher',
+  })
+  @IsString()
+  @IsOptional()
+  phone: string;
+
+  @ApiProperty({
+    example: `${new Date()}`,
+    description: 'Birthday of a teacher',
+  })
+  @IsDate()
+  @IsOptional()
+  birthday: Date;
 
   @ApiProperty({
     type: 'array',
