@@ -5,6 +5,7 @@ import { BaseModel } from '../../../base/model/base.model';
 import { WorkingTimeGraphicEnum } from '../../../utils/enums/working-time-graphic.enum';
 import { Type } from 'class-transformer';
 import { IsOptional } from 'class-validator';
+import { GenderEnum } from '../../../utils/enums/gender.enum';
 
 export type TeacherDocument = HydratedDocument<Teacher>;
 
@@ -19,8 +20,22 @@ export class Teacher extends BaseModel {
   @Prop()
   email: string;
 
+  @Prop({
+    enum: GenderEnum,
+  })
+  gender: GenderEnum;
+
+  @Prop()
+  address: string;
+
+  @Prop()
+  phone: string;
+
   @Prop()
   workingDays: number[];
+
+  @Prop()
+  birthday: Date;
 
   @Prop({
     enum: WorkingTimeGraphicEnum,
