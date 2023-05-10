@@ -21,7 +21,11 @@ export abstract class BaseService<T extends BaseModel> {
   }
 
   async update(id: string, updateDto: any) {
-    return this.model.findByIdAndUpdate(id, updateDto, { new: true });
+    return this.model.findByIdAndUpdate(
+      id,
+      { updatedAt: Date.now(), ...updateDto },
+      { new: true },
+    );
   }
 
   async delete(id: string) {
