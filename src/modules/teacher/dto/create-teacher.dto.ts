@@ -10,6 +10,7 @@ import {
 } from 'class-validator';
 import { WorkingTimeGraphicEnum } from '../../../utils/enums/working-time-graphic.enum';
 import { GenderEnum } from '../../../utils/enums/gender.enum';
+import { Type } from 'class-transformer';
 
 export class CreateTeacherDto {
   @ApiProperty({
@@ -48,7 +49,6 @@ export class CreateTeacherDto {
     description: 'Working graphic of a teacher',
   })
   @IsEnum(WorkingTimeGraphicEnum)
-  @IsOptional()
   workingGraphic: WorkingTimeGraphicEnum;
 
   @ApiProperty({
@@ -71,6 +71,7 @@ export class CreateTeacherDto {
     example: `${new Date()}`,
     description: 'Birthday of a teacher',
   })
+  @Type(() => Date)
   @IsDate()
   @IsOptional()
   birthday: Date;
