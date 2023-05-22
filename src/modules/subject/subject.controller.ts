@@ -39,7 +39,7 @@ export class SubjectController {
   @Get(':id')
   @ApiOperation({ summary: 'Get by id' })
   async findOne(@Param('id') id: string) {
-    return this.subjectService.get(id);
+    return this.subjectService.getById(id);
   }
 
   @Patch(':id')

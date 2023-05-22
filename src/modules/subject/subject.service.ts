@@ -21,6 +21,10 @@ export class SubjectService extends BaseService<Subject> {
     return this.subjectModel.find().populate('teachers').populate('groups');
   }
 
+  async getById(id: string) {
+    return this.subjectModel.findById(id).populate('teachers');
+  }
+
   async getFilteredSubjects(listSubjectParams: ListSubjectParamsDto) {
     const result = await this.subjectModel
       .find({
