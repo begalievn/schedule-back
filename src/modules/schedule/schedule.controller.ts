@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Patch,
-  Post,
+  Post, Put,
   Query,
 } from '@nestjs/common';
 import { ScheduleService } from './schedule.service';
@@ -29,6 +29,18 @@ export class ScheduleController {
   @ApiOperation({ summary: 'Создание расписания' })
   createSchedule(@Body() createScheduleDto: CreateScheduleDto) {
     return this.scheduleService.createSchedule(createScheduleDto);
+  }
+
+  @Get('active')
+  @ApiOperation({ summary: 'Получение активного расписания' })
+  getActiveSchedule() {
+    return this.scheduleService.getActiveSchedule();
+  }
+
+  @Put('active/:id')
+  @ApiOperation({ summary: 'Изменение активного расписания' })
+  changeActiveSchedule(@Param('id') id: string) {
+    return this.scheduleService.changeActiveSchedule(id);
   }
 
   @Get(':id')
