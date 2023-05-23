@@ -46,6 +46,11 @@ export class Schedule extends BaseModel {
 
   @Prop()
   days: IDays[];
+
+  @Prop({
+    default: false,
+  })
+  active: boolean;
 }
 
 export const ScheduleSchema = SchemaFactory.createForClass(Schedule);
