@@ -7,6 +7,7 @@ import { BaseService } from '../../base/base.service';
 import { ListSubjectParamsDto } from './dto/list-subject-params.dto';
 import { ListScheduleParamsDto } from '../schedule/dto/list-schedule-params.dto';
 import { Teacher } from '../teacher/model/teacher.model';
+import { Department } from '../department/model/department.model';
 
 @Injectable()
 export class SubjectService extends BaseService<Subject> {
@@ -22,16 +23,52 @@ export class SubjectService extends BaseService<Subject> {
   }
 
   async getById(id: string) {
-    return this.subjectModel.findById(id).populate('teachers');
+    return this.subjectModel
+      .findById(id)
+      .populate('teachers')
+      .populate('department');
   }
 
   async getFilteredSubjects(listSubjectParams: ListSubjectParamsDto) {
-    const result = await this.subjectModel
-      .find({
-        semester: listSubjectParams.semester,
-        courses: { $all: [listSubjectParams.course] },
-      })
-      .populate('teachers');
+    const { department, semester, course } = listSubjectParams;
+
+    let departmentFilter = {};
+    if (department) {
+      departmentFilter = { 'department.code': department };
+    }
+
+    const result = await this.subjectModel.aggregate([
+      {
+        $match: {
+          semester,
+          courses: { $all: [course] },
+        },
+      },
+      {
+        $lookup: {
+          from: 'departments',
+          localField: 'department',
+          foreignField: '_id',
+          as: 'department',
+        },
+      },
+      // {
+      //   $unwind: {
+      //     path: '$department',
+      //   },
+      // },
+      {
+        $lookup: {
+          from: 'teachers',
+          localField: 'teachers',
+          foreignField: '_id',
+          as: 'teachers',
+        },
+      },
+      {
+        $match: departmentFilter,
+      },
+    ]);
 
     return result;
   }
@@ -45,9 +82,7 @@ export class SubjectService extends BaseService<Subject> {
   }
 
   async create(createSubjectDto: CreateSubjectDto) {
-    console.log(createSubjectDto, '--->');
     const newSubject = new this.subjectModel(createSubjectDto);
-    console.log(newSubject);
     return newSubject.save();
   }
 }
