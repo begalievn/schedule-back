@@ -9,6 +9,7 @@ import {
 } from 'class-validator';
 import { Teacher } from '../../teacher/model/teacher.model';
 import { CourseYear } from '../../../utils/enums/course-year.enum';
+import { Department } from '../../department/model/department.model';
 
 export class CreateSubjectDto {
   @ApiProperty({
@@ -75,6 +76,13 @@ export class CreateSubjectDto {
   @IsArray()
   @IsOptional()
   teachers: Teacher[];
+
+  @ApiProperty({
+    oneOf: [{ $ref: getSchemaPath(Department) }],
+    example: '646e0c853dba35dcfa27d8f5',
+  })
+  @IsString()
+  department: string;
 
   @ApiProperty({
     enum: [CourseYear.FIRST_YEAR, CourseYear.SECOND_YEAR],
