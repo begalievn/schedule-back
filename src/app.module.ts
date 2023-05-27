@@ -8,6 +8,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { DepartmentModule } from './modules/department/department.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     ScheduleModule,
     AuthModule,
     UsersModule,
+    DepartmentModule,
   ],
 })
 export class AppModule {}

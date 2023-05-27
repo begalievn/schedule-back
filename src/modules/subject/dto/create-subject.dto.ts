@@ -39,6 +39,18 @@ export class CreateSubjectDto {
   numberOfHours: number;
 
   @ApiProperty({
+    example: 0,
+  })
+  @IsNumber()
+  lectureHours: number;
+
+  @ApiProperty({
+    example: 4,
+  })
+  @IsNumber()
+  labHours: number;
+
+  @ApiProperty({
     example: 'This is a description of a subject',
     description: 'Description of a subject',
   })

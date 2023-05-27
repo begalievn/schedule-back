@@ -30,6 +30,12 @@ export class Subject extends BaseModel {
   @Prop()
   numberOfHours: number;
 
+  @Prop()
+  lectureHours: number;
+
+  @Prop()
+  labHours: number;
+
   @Prop({
     enum: SemesterEnum,
     required: true,
