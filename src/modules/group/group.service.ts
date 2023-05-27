@@ -6,7 +6,7 @@ import { Model } from 'mongoose';
 import { BaseService } from '../../base/base.service';
 
 @Injectable()
-export class GroupService extends BaseService<Group>{
+export class GroupService extends BaseService<Group> {
   constructor(
     @InjectModel(Group.name)
     private readonly groupModel: Model<GroupDocument>,
@@ -14,7 +14,7 @@ export class GroupService extends BaseService<Group>{
     super(groupModel);
   }
 
-  create(createGroupDto: CreateGroupDto) {
+  async create(createGroupDto: CreateGroupDto) {
     const newGroup = new this.groupModel(createGroupDto);
     return newGroup.save();
   }
